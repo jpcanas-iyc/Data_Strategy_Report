@@ -284,75 +284,139 @@
 
             <div class="kpi-top-graphs">
 
-                <!-- Gráfica -->
-                <div >
-                    <span style="
-                        display:inline-block;
-                        padding:4px 12px;
-                        border-radius:5px;
-                        background-color:rgba(198,40,40,0.08);
-                        color:#C62828;
-                        font-size:12px;
-                        font-weight:600;
-                        letter-spacing:0.5px;
-                        text-align:left;
-                        margin-bottom:10px;
-                    ">
-                        Cumplimiento Proyectos
-                    </span>
+            <div>
+                <span style="
+                    display:inline-block;
+                    padding:4px 12px;
+                    border-radius:5px;
+                    background-color:rgba(198,40,40,0.08);
+                    color:#C62828;
+                    font-size:12px;
+                    font-weight:600;
+                    letter-spacing:0.5px;
+                    text-align:left;
+                    margin-bottom:10px;">
+                    Cumplimiento Proyectos
+                </span>
 
-                    <div class="kpi-bar-chart">
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Planeados</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p90"></div>
-                            </div>
-                            <div class="kpi-bar-value">90%</div>
-                        </div>
+                <div class="kpi-bar-chart">
 
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Nuevos</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p82"></div>
-                            </div>
-                            <div class="kpi-bar-value">82%</div>
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Planeados</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="9.52"></div>
                         </div>
-
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Plan Anterior</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p82"></div>
-                            </div>
-                            <div class="kpi-bar-value">82%</div>
-                        </div>
+                        <div class="kpi-bar-value">9.52%</div>
                     </div>
-                </div>
 
-                <!-- Descripción -->
-                <div style="font-size:10px; line-height:2.4;">
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Nuevos</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="0.0"></div>
+                        </div>
+                        <div class="kpi-bar-value">0.0%</div>
+                    </div>
 
-                    <span style="color:#C62828; font-weight:700;">31 proyectos</span> 
-                    forman parte del plan anual estratégico definido para el 2026 (Proyectos planeados y Planes anteriores). 
-                    De estos, se han ejecutado 
-                    <span style="color:#C62828; font-weight:700;">10 proyectos</span>, 
-                    lo que representa un avance del 
-                    <span style="color:#C62828; font-weight:700;">30%</span> 
-                    frente a lo planificado.
-
-                    Durante el transcurso del año han ingresado 
-                    <span style="color:#C62828; font-weight:700;">16 nuevos proyectos</span>, 
-                    de los cuales se han ejecutado 
-                    <span style="color:#C62828; font-weight:700;">5 proyectos</span>.
-
-                    En total, la gestión del año contempla 
-                    <span style="color:#C62828; font-weight:700;">47 proyectos</span>, 
-                    lo que representa un incremento del 
-                    <span style="color:#C62828; font-weight:700;">51,6%</span> 
-                    frente a lo inicialmente planificado.
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Plan Anterior</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="16.67"></div>
+                        </div>
+                        <div class="kpi-bar-value">16.67%</div>
+                    </div>
 
                 </div>
+            </div>
 
-            </div>  
+            <!-- Descripción dinámica -->
+            <div style="font-size:10px; line-height:2.4; margin-top:15px;">
+
+                <span style="color:#C62828; font-weight:700;">
+                    27 proyectos
+                </span> 
+                forman parte del plan anual estratégico definido para el 2026 
+                (Proyectos planeados y Planes anteriores). 
+
+                De estos, se han ejecutado 
+                <span style="color:#C62828; font-weight:700;">
+                    3 proyectos
+                </span>, 
+                lo que representa un avance del 
+                <span style="color:#C62828; font-weight:700;">
+                    11.1%
+                </span> 
+                frente a lo planificado.
+
+
+                Durante el transcurso del año han ingresado 
+                <span style="color:#C62828; font-weight:700;">
+                    1 nuevos proyectos
+                </span>, 
+                de los cuales se han ejecutado 
+                <span style="color:#C62828; font-weight:700;">
+                    0 proyectos
+                </span>.
+
+
+                En total, la gestión del año contempla 
+                <span style="color:#C62828; font-weight:700;">
+                    28 proyectos
+                </span>, 
+                lo que representa un incremento del 
+                <span style="color:#C62828; font-weight:700;">
+                    3.7%
+                </span> 
+                frente a lo inicialmente planificado.
+
+            </div>
+
+        </div>
+
+        <style>
+        .kpi-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .kpi-bar-fill {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #C62828, #ef5350);
+            border-radius: 6px;
+            transition: width 1.8s cubic-bezier(.4,0,.2,1);
+            box-shadow: 0 0 8px rgba(198,40,40,0.4);
+        }
+
+        .kpi-bar-item {
+            margin-bottom: 15px;
+        }
+
+        .kpi-bar-label {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .kpi-bar-value {
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        </style>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.kpi-bar-fill').forEach(function(bar) {
+                let target = bar.getAttribute("data-value");
+                setTimeout(() => {
+                    bar.style.width = target + "%";
+                }, 400);
+            });
+        });
+        </script>
 
             <div class="kpi-roi-header">
                 <div class="kpi-roi-title">
@@ -477,31 +541,88 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/IMG_2797.JPEG" alt="Background">
+            <img src="../img/IMG_3060.JPEG" alt="Background">
         </div>
     </div>
     
-    <div class="double layout-full-overlay">
-        <div class="background-image">
-            <img src="../img/IMG_3210.JPEG" alt="Background">
+    <div class="double layout-left-text">
+        <div class="text-column">
+            <div class="text-content">
+                <div class="accent-line"></div>
+                <div class="task-code">          </div>
+                <h2>RQ-IGD-26022-Modelo de datos Movimiento Cartera</h2>
+                <div class="task-info">
+                    <div class="task-label">Depósito</div>
+                    <div class="task-value">Finalizado</div>
+                </div>
+                <div class="task-info">
+                    <div class="task-label">Gerencia</div>
+                    <div class="task-value">Sin_Definir</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100.0%"></div>
+                </div>
+                <div class="percentage-badge">100%</div>
+                <div class="task-info">
+                    <div class="date-display">Inicio: 2026-01-02</div>
+                    <div class="date-display">Fin: 2026-01-30</div>
+                </div>
+            </div>
         </div>
-        <div class="gradient-overlay"></div>
-        <div class="content-box">
-            <h2>
-                RQ-IGD-26022-Modelo
-                <span class="red-accent">de datos Movimiento Cartera</span>
-            </h2>
-            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
-                <strong>Código:</strong>           
+        <div class="image-column">
+            <img src="../img/SaveClip.App_618500809_18554841304017994_354829988070154972_n.jpg" alt="Background">
+        </div>
+    </div>
+    
+    <div class="double layout-grid">
+        <div class="text-area">
+            <h2>RQ-IGD-26036-Modelo de datos estado de herramientas</h2>
+            <div class="task-info">
+                <div class="task-label">Código</div>
+                <div class="task-value">          </div>
             </div>
             <div class="task-info">
-                <strong>Depósito:</strong> Finalizado
+                <div class="task-label">Notas</div>
+                <div class="task-value">..</div>
             </div>
-            <div class="task-info">
-                <strong>Estado:</strong> Planeado
+            <div class="highlight-box">
+                <strong>Progreso:</strong> 100%<br>
+                <strong>Estado:</strong> Plan Anterior
             </div>
-            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
-                100%
+        </div>
+        <div class="image-area-1">
+            <img src="../img/Imagen_Gris.png" alt="Background">
+        </div>
+        <div class="image-area-2">
+            <div>
+                <div class="task-label">Depósito</div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+                    Finalizado
+                </div>
+                <div class="task-label">Gerencia</div>
+                <div style="font-size: 16px;">
+                    Sin_Definir
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-diagonal">
+        <div class="diagonal-bg"></div>
+        <div class="content-wrapper">
+            <div class="text-section">
+                <div class="task-code" style="color: var(--accent-red);">          </div>
+                <h2>RQ-IGD-26028-RetoYA1</h2>
+                <div class="task-info">
+                    <strong>Depósito:</strong> En curso
+                </div>
+                <div class="task-info">
+                    <strong>Gerencia:</strong> Sin_Definir
+                </div>
+                <div class="percentage-badge">0% Completado</div>
+            </div>
+            <div class="image-section">
+                <img src="../img/IMG_3046.JPEG" alt="Background">
             </div>
         </div>
     </div>
@@ -512,11 +633,11 @@
         </div>
         <div class="center-content">
             <div class="image-container">
-                <img src="../img/5c37bc2d-f632-42ed-8585-d38ae0fe2575.JPEG" alt="Background">
+                <img src="../img/IMG_3210.JPEG" alt="Background">
                 <div class="text-overlay">
-                    <h2>RQ-IGD-26036-Modelo de datos estado de herramientas</h2>
+                    <h2>RQ-IGD-26013-Informe Mensual de Costos y Gastos Operacionales -Cubo Contable</h2>
                     <div class="task-info">
-                        <strong>Plan Anterior</strong> - 100%
+                        <strong>Planeado</strong> - 0%
                     </div>
                     <div class="task-info">
                         ...
@@ -526,64 +647,6 @@
         </div>
         <div class="right-margin">
             <div class="margin-text">PROYECTO</div>
-        </div>
-    </div>
-    
-    <div class="double layout-full-overlay">
-        <div class="background-image">
-            <img src="../img/IMG_3073.JPEG" alt="Background">
-        </div>
-        <div class="gradient-overlay"></div>
-        <div class="content-box">
-            <h2>
-                RQ-IGD-26028-RetoYA1
-                <span class="red-accent"></span>
-            </h2>
-            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
-                <strong>Código:</strong>           
-            </div>
-            <div class="task-info">
-                <strong>Depósito:</strong> En curso
-            </div>
-            <div class="task-info">
-                <strong>Estado:</strong> Planeado
-            </div>
-            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
-                0%
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-grid">
-        <div class="text-area">
-            <h2>RQ-IGD-26013-Informe Mensual de Costos y Gastos Operacionales -Cubo Contable</h2>
-            <div class="task-info">
-                <div class="task-label">Código</div>
-                <div class="task-value">          </div>
-            </div>
-            <div class="task-info">
-                <div class="task-label">Notas</div>
-                <div class="task-value">..</div>
-            </div>
-            <div class="highlight-box">
-                <strong>Progreso:</strong> 0%<br>
-                <strong>Estado:</strong> Planeado
-            </div>
-        </div>
-        <div class="image-area-1">
-            <img src="../img/IMG_0283.JPEG" alt="Background">
-        </div>
-        <div class="image-area-2">
-            <div>
-                <div class="task-label">Depósito</div>
-                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
-                    En curso
-                </div>
-                <div class="task-label">Gerencia</div>
-                <div style="font-size: 16px;">
-                    Gerencia Contraloria
-                </div>
-            </div>
         </div>
     </div>
     
@@ -602,98 +665,26 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/SaveClip.App_618500809_18554841304017994_354829988070154972_n.jpg" alt="Background">
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-center-margins">
-        <div class="left-margin">
-            <div class="margin-text">          </div>
-        </div>
-        <div class="center-content">
-            <div class="image-container">
-                <img src="../img/xsr900blancoRojo.jpg" alt="Background">
-                <div class="text-overlay">
-                    <h2>RQ-IGD-26030-Arquitectura Infraestructura de datos - DB's Incolmotos - Maria Elena</h2>
-                    <div class="task-info">
-                        <strong>Planeado</strong> - 0%
-                    </div>
-                    <div class="task-info">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="right-margin">
-            <div class="margin-text">PROYECTO</div>
-        </div>
-    </div>
-    
-    <div class="double layout-left-text">
-        <div class="text-column">
-            <div class="text-content">
-                <div class="accent-line"></div>
-                <div class="task-code">          </div>
-                <h2>RQ-IGD-26033-SAIA</h2>
-                <div class="task-info">
-                    <div class="task-label">Depósito</div>
-                    <div class="task-value">En curso</div>
-                </div>
-                <div class="task-info">
-                    <div class="task-label">Gerencia</div>
-                    <div class="task-value">Sin_Definir</div>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" style="width: 0.0%"></div>
-                </div>
-                <div class="percentage-badge">0%</div>
-                <div class="task-info">
-                    <div class="date-display">Inicio: 2026-02-09</div>
-                    <div class="date-display">Fin: 2026-02-20</div>
-                </div>
-            </div>
-        </div>
-        <div class="image-column">
-            <img src="../img/IMG_4339.JPEG" alt="Background">
-        </div>
-    </div>
-    
-    <div class="double layout-diagonal">
-        <div class="diagonal-bg"></div>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>RQ-IGD-26001-Repuestos para muestra (Auditoria proyecto cero retorno partes NG)</h2>
-                <div class="task-info">
-                    <strong>Depósito:</strong> Por hacer
-                </div>
-                <div class="task-info">
-                    <strong>Gerencia:</strong> Gerencia Servicio Al Cliente
-                </div>
-                <div class="percentage-badge">0% Completado</div>
-            </div>
-            <div class="image-section">
-                <img src="../img/banner-1-515x187.png" alt="Background">
+                <img src="../img/MT09-2025-BANNER (2).jpg" alt="Background">
             </div>
         </div>
     </div>
     
     <div class="double layout-full-overlay">
         <div class="background-image">
-            <img src="../img/SaveClip.App_AQNBnA_vLGwAUlfpbs4nwGOF5Mm_2SOeTvYnF9pOs7jYxlRN6bdGyLqKfdUgYsqq_7ORB2Wws8d2TdVt8oSK3luh6AddVfBhzJTSTIQ.mp4" alt="Background">
+            <img src="../img/xsr900blancoRojo2.jpg" alt="Background">
         </div>
         <div class="gradient-overlay"></div>
         <div class="content-box">
             <h2>
-                PJ-IGD-26002-Modelo
-                <span class="red-accent">de datos de formación de empleados - Julieth</span>
+                RQ-IGD-26030-Arquitectura
+                <span class="red-accent">Infraestructura de datos - DB's Incolmotos - Maria Elena</span>
             </h2>
             <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
                 <strong>Código:</strong>           
             </div>
             <div class="task-info">
-                <strong>Depósito:</strong> Por hacer
+                <strong>Depósito:</strong> En curso
             </div>
             <div class="task-info">
                 <strong>Estado:</strong> Planeado
@@ -709,7 +700,56 @@
         <div class="content-wrapper">
             <div class="text-section">
                 <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>RQ-IGD-26003-Sistema de alertas para gestión de calidad de datos Heinsohn</h2>
+                <h2>RQ-IGD-26033-SAIA</h2>
+                <div class="task-info">
+                    <strong>Depósito:</strong> En curso
+                </div>
+                <div class="task-info">
+                    <strong>Gerencia:</strong> Sin_Definir
+                </div>
+                <div class="percentage-badge">0% Completado</div>
+            </div>
+            <div class="image-section">
+                <img src="../img/IMG_3086.JPEG" alt="Background">
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-left-text">
+        <div class="text-column">
+            <div class="text-content">
+                <div class="accent-line"></div>
+                <div class="task-code">          </div>
+                <h2>RQ-IGD-26001-Repuestos para muestra (Auditoria proyecto cero retorno partes NG)</h2>
+                <div class="task-info">
+                    <div class="task-label">Depósito</div>
+                    <div class="task-value">Por hacer</div>
+                </div>
+                <div class="task-info">
+                    <div class="task-label">Gerencia</div>
+                    <div class="task-value">Gerencia Servicio Al Cliente</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0.0%"></div>
+                </div>
+                <div class="percentage-badge">0%</div>
+                <div class="task-info">
+                    <div class="date-display">Inicio: None</div>
+                    <div class="date-display">Fin: None</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column">
+            <img src="../img/IMG_3046.JPEG" alt="Background">
+        </div>
+    </div>
+    
+    <div class="double layout-diagonal">
+        <div class="diagonal-bg"></div>
+        <div class="content-wrapper">
+            <div class="text-section">
+                <div class="task-code" style="color: var(--accent-red);">          </div>
+                <h2>PJ-IGD-26002-Modelo de datos de formación de empleados - Julieth</h2>
                 <div class="task-info">
                     <strong>Depósito:</strong> Por hacer
                 </div>
@@ -719,7 +759,40 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/IMG_3073.JPEG" alt="Background">
+                <img src="../img/SaveClip.App_545271775_18528161710017994_2064300456169816700_n.jpg" alt="Background">
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-grid">
+        <div class="text-area">
+            <h2>RQ-IGD-26003-Sistema de alertas para gestión de calidad de datos Heinsohn</h2>
+            <div class="task-info">
+                <div class="task-label">Código</div>
+                <div class="task-value">          </div>
+            </div>
+            <div class="task-info">
+                <div class="task-label">Notas</div>
+                <div class="task-value">..</div>
+            </div>
+            <div class="highlight-box">
+                <strong>Progreso:</strong> 0%<br>
+                <strong>Estado:</strong> Planeado
+            </div>
+        </div>
+        <div class="image-area-1">
+            <img src="../img/SaveClip.App_616521678_18554324308017994_7558152651206429426_n.jpg" alt="Background">
+        </div>
+        <div class="image-area-2">
+            <div>
+                <div class="task-label">Depósito</div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+                    Por hacer
+                </div>
+                <div class="task-label">Gerencia</div>
+                <div style="font-size: 16px;">
+                    Gerencia De Talento Humano
+                </div>
             </div>
         </div>
     </div>
@@ -749,7 +822,7 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/SaveClip.App_545271775_18528161710017994_2064300456169816700_n.jpg" alt="Background">
+            <img src="../img/IMG_4480.JPEG" alt="Background">
         </div>
     </div>
     
@@ -768,20 +841,74 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/MT09-2025-BANNER (2).jpg" alt="Background">
+                <img src="../img/SaveClip.App_618500809_18554841304017994_354829988070154972_n.jpg" alt="Background">
             </div>
+        </div>
+    </div>
+    
+    <div class="double layout-left-text">
+        <div class="text-column">
+            <div class="text-content">
+                <div class="accent-line"></div>
+                <div class="task-code">          </div>
+                <h2>RQ-IGD-26006-Modelo de datos desvinculación (retiros) Heinsonh - Julieth</h2>
+                <div class="task-info">
+                    <div class="task-label">Depósito</div>
+                    <div class="task-value">Por hacer</div>
+                </div>
+                <div class="task-info">
+                    <div class="task-label">Gerencia</div>
+                    <div class="task-value">Gerencia De Talento Humano</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0.0%"></div>
+                </div>
+                <div class="percentage-badge">0%</div>
+                <div class="task-info">
+                    <div class="date-display">Inicio: None</div>
+                    <div class="date-display">Fin: None</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column">
+            <img src="../img/SaveClip.App_616236505_18554324236017994_3939149151847755334_n.jpg" alt="Background">
+        </div>
+    </div>
+    
+    <div class="double layout-right-text">
+        <div class="text-column">
+            <div class="text-content">
+                <h2>PJ-IGD-26007-Modelo de Datos módulo bienestar Heinsonh - julieth</h2>
+                <div class="divider"></div>
+                <div class="task-label">Código:           </div>
+                <div class="task-info">
+                    <strong>Estado:</strong> Planeado
+                </div>
+                <div class="task-info">
+                    <strong>Notas:</strong><br>
+                </div>
+                <div class="task-info">
+                    <strong>Progreso:</strong> 0%
+                </div>
+                <div class="task-info">
+                    <div class="date-display">Entrega: None</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column">
+            <img src="../img/IMG_3060.JPEG" alt="Background">
         </div>
     </div>
     
     <div class="double layout-full-overlay">
         <div class="background-image">
-            <img src="../img/IMG_3060.JPEG" alt="Background">
+            <img src="../img/IMG_0206.JPEG" alt="Background">
         </div>
         <div class="gradient-overlay"></div>
         <div class="content-box">
             <h2>
-                RQ-IGD-26006-Modelo
-                <span class="red-accent">de datos desvinculación (retiros) Heinsonh - Julieth</span>
+                PJ-IGD-26009-Modelo
+                <span class="red-accent">de Datos Indicadores de Riesgos Isolucion</span>
             </h2>
             <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
                 <strong>Código:</strong>           
@@ -794,59 +921,6 @@
             </div>
             <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
                 0%
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-diagonal">
-        <div class="diagonal-bg"></div>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>PJ-IGD-26007-Modelo de Datos módulo bienestar Heinsonh - julieth</h2>
-                <div class="task-info">
-                    <strong>Depósito:</strong> Por hacer
-                </div>
-                <div class="task-info">
-                    <strong>Gerencia:</strong> Gerencia De Talento Humano
-                </div>
-                <div class="percentage-badge">0% Completado</div>
-            </div>
-            <div class="image-section">
-                <img src="../img/IMG_0724.JPEG" alt="Background">
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-grid">
-        <div class="text-area">
-            <h2>PJ-IGD-26009-Modelo de Datos Indicadores de Riesgos Isolucion</h2>
-            <div class="task-info">
-                <div class="task-label">Código</div>
-                <div class="task-value">          </div>
-            </div>
-            <div class="task-info">
-                <div class="task-label">Notas</div>
-                <div class="task-value">..</div>
-            </div>
-            <div class="highlight-box">
-                <strong>Progreso:</strong> 0%<br>
-                <strong>Estado:</strong> Planeado
-            </div>
-        </div>
-        <div class="image-area-1">
-            <img src="../img/IMG_0724.JPEG" alt="Background">
-        </div>
-        <div class="image-area-2">
-            <div>
-                <div class="task-label">Depósito</div>
-                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
-                    Por hacer
-                </div>
-                <div class="task-label">Gerencia</div>
-                <div style="font-size: 16px;">
-                    Gerencia De Calidad
-                </div>
             </div>
         </div>
     </div>
@@ -866,75 +940,7 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/IMG_0717.JPEG" alt="Background">
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-center-margins">
-        <div class="left-margin">
-            <div class="margin-text">          </div>
-        </div>
-        <div class="center-content">
-            <div class="image-container">
-                <img src="../img/SaveClip.App_616236505_18554324236017994_3939149151847755334_n.jpg" alt="Background">
-                <div class="text-overlay">
-                    <h2>PJ-IGD-26011-Control Cambios y Novedades - Partes CKD y Complementos</h2>
-                    <div class="task-info">
-                        <strong>Planeado</strong> - 0%
-                    </div>
-                    <div class="task-info">
-                        ...
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="right-margin">
-            <div class="margin-text">PROYECTO</div>
-        </div>
-    </div>
-    
-    <div class="double layout-full-overlay">
-        <div class="background-image">
-            <img src="../img/IMG_3086.JPEG" alt="Background">
-        </div>
-        <div class="gradient-overlay"></div>
-        <div class="content-box">
-            <h2>
-                PJ-IGD-26012-Modelo
-                <span class="red-accent">de Indicadores para Gestión del Centro de Partes - Julieth</span>
-            </h2>
-            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
-                <strong>Código:</strong>           
-            </div>
-            <div class="task-info">
-                <strong>Depósito:</strong> Por hacer
-            </div>
-            <div class="task-info">
-                <strong>Estado:</strong> Planeado
-            </div>
-            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
-                0%
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-diagonal">
-        <div class="diagonal-bg"></div>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>PJ-IGD-26014-Modelo de Datos Servicio al Cliente - Julieth</h2>
-                <div class="task-info">
-                    <strong>Depósito:</strong> Por hacer
-                </div>
-                <div class="task-info">
-                    <strong>Gerencia:</strong> Gerencia Servicio Al Cliente
-                </div>
-                <div class="percentage-badge">0% Completado</div>
-            </div>
-            <div class="image-section">
-                <img src="../img/SaveClip.App_616236505_18554324236017994_3939149151847755334_n.jpg" alt="Background">
+                <img src="../img/IMG_1837.JPEG" alt="Background">
             </div>
         </div>
     </div>
@@ -942,7 +948,7 @@
     <div class="double layout-right-text">
         <div class="text-column">
             <div class="text-content">
-                <h2>PJ-IGD-26015-Cuadro de Mando Infraestructura de Datos</h2>
+                <h2>PJ-IGD-26011-Control Cambios y Novedades - Partes CKD y Complementos</h2>
                 <div class="divider"></div>
                 <div class="task-label">Código:           </div>
                 <div class="task-info">
@@ -960,72 +966,7 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/nmax.jpg" alt="Background">
-        </div>
-    </div>
-    
-    <div class="double layout-diagonal">
-        <div class="diagonal-bg"></div>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>RQ-IGD-26016-OTIF Proveedores CKD y Complementos - Julieth</h2>
-                <div class="task-info">
-                    <strong>Depósito:</strong> Por hacer
-                </div>
-                <div class="task-info">
-                    <strong>Gerencia:</strong> Gerencia Logistica
-                </div>
-                <div class="percentage-badge">0% Completado</div>
-            </div>
-            <div class="image-section">
-                <img src="../img/pez.png" alt="Background">
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-full-overlay">
-        <div class="background-image">
-            <img src="../img/IMG_3060.JPEG" alt="Background">
-        </div>
-        <div class="gradient-overlay"></div>
-        <div class="content-box">
-            <h2>
-                RQ-IGD-26017-Proyección
-                <span class="red-accent">fechas de Llegada Repuestos y MOS proyectado v2 - Julieth</span>
-            </h2>
-            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
-                <strong>Código:</strong>           
-            </div>
-            <div class="task-info">
-                <strong>Depósito:</strong> Por hacer
-            </div>
-            <div class="task-info">
-                <strong>Estado:</strong> Sin Definir
-            </div>
-            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
-                0%
-            </div>
-        </div>
-    </div>
-    
-    <div class="double layout-diagonal">
-        <div class="diagonal-bg"></div>
-        <div class="content-wrapper">
-            <div class="text-section">
-                <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>RQ-IGD-26018-Archivo de Compras: Musical y Repuestos</h2>
-                <div class="task-info">
-                    <strong>Depósito:</strong> Por hacer
-                </div>
-                <div class="task-info">
-                    <strong>Gerencia:</strong> Gerencia Logistica
-                </div>
-                <div class="percentage-badge">0% Completado</div>
-            </div>
-            <div class="image-section">
-                <img src="../img/IMG_4339.JPEG" alt="Background">
-            </div>
+            <img src="../img/IMG_1106.JPEG" alt="Background">
         </div>
     </div>
     
@@ -1034,7 +975,7 @@
             <div class="text-content">
                 <div class="accent-line"></div>
                 <div class="task-code">          </div>
-                <h2>RQ-IGD-26019-Monitoreo PSI CKD - Julieth</h2>
+                <h2>PJ-IGD-26012-Modelo de Indicadores para Gestión del Centro de Partes - Julieth</h2>
                 <div class="task-info">
                     <div class="task-label">Depósito</div>
                     <div class="task-value">Por hacer</div>
@@ -1054,7 +995,149 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/Fondo_Blanco.jpg" alt="Background">
+            <img src="../img/IMG_0261.JPEG" alt="Background">
+        </div>
+    </div>
+    
+    <div class="double layout-diagonal">
+        <div class="diagonal-bg"></div>
+        <div class="content-wrapper">
+            <div class="text-section">
+                <div class="task-code" style="color: var(--accent-red);">          </div>
+                <h2>PJ-IGD-26014-Modelo de Datos Servicio al Cliente - Julieth</h2>
+                <div class="task-info">
+                    <strong>Depósito:</strong> Por hacer
+                </div>
+                <div class="task-info">
+                    <strong>Gerencia:</strong> Gerencia Servicio Al Cliente
+                </div>
+                <div class="percentage-badge">0% Completado</div>
+            </div>
+            <div class="image-section">
+                <img src="../img/IMG_0206.JPEG" alt="Background">
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-center-margins">
+        <div class="left-margin">
+            <div class="margin-text">          </div>
+        </div>
+        <div class="center-content">
+            <div class="image-container">
+                <img src="../img/IMG_3086.JPEG" alt="Background">
+                <div class="text-overlay">
+                    <h2>PJ-IGD-26015-Cuadro de Mando Infraestructura de Datos</h2>
+                    <div class="task-info">
+                        <strong>Planeado</strong> - 0%
+                    </div>
+                    <div class="task-info">
+                        ...
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-margin">
+            <div class="margin-text">PROYECTO</div>
+        </div>
+    </div>
+    
+    <div class="double layout-left-text">
+        <div class="text-column">
+            <div class="text-content">
+                <div class="accent-line"></div>
+                <div class="task-code">          </div>
+                <h2>RQ-IGD-26016-OTIF Proveedores CKD y Complementos - Julieth</h2>
+                <div class="task-info">
+                    <div class="task-label">Depósito</div>
+                    <div class="task-value">Por hacer</div>
+                </div>
+                <div class="task-info">
+                    <div class="task-label">Gerencia</div>
+                    <div class="task-value">Gerencia Logistica</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0.0%"></div>
+                </div>
+                <div class="percentage-badge">0%</div>
+                <div class="task-info">
+                    <div class="date-display">Inicio: None</div>
+                    <div class="date-display">Fin: None</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column">
+            <img src="../img/SaveClip.App_616236505_18554324236017994_3939149151847755334_n.jpg" alt="Background">
+        </div>
+    </div>
+    
+    <div class="double layout-diagonal">
+        <div class="diagonal-bg"></div>
+        <div class="content-wrapper">
+            <div class="text-section">
+                <div class="task-code" style="color: var(--accent-red);">          </div>
+                <h2>RQ-IGD-26017-Proyección fechas de Llegada Repuestos y MOS proyectado v2 - Julieth</h2>
+                <div class="task-info">
+                    <strong>Depósito:</strong> Por hacer
+                </div>
+                <div class="task-info">
+                    <strong>Gerencia:</strong> Gerencia Logistica
+                </div>
+                <div class="percentage-badge">0% Completado</div>
+            </div>
+            <div class="image-section">
+                <img src="../img/fondoderechakpi(2).mp4" alt="Background">
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-full-overlay">
+        <div class="background-image">
+            <img src="../img/IMG_1837.JPEG" alt="Background">
+        </div>
+        <div class="gradient-overlay"></div>
+        <div class="content-box">
+            <h2>
+                RQ-IGD-26018-Archivo
+                <span class="red-accent">de Compras: Musical y Repuestos</span>
+            </h2>
+            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
+                <strong>Código:</strong>           
+            </div>
+            <div class="task-info">
+                <strong>Depósito:</strong> Por hacer
+            </div>
+            <div class="task-info">
+                <strong>Estado:</strong> Sin Definir
+            </div>
+            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
+                0%
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-right-text">
+        <div class="text-column">
+            <div class="text-content">
+                <h2>RQ-IGD-26019-Monitoreo PSI CKD - Julieth</h2>
+                <div class="divider"></div>
+                <div class="task-label">Código:           </div>
+                <div class="task-info">
+                    <strong>Estado:</strong> Sin Definir
+                </div>
+                <div class="task-info">
+                    <strong>Notas:</strong><br>
+                </div>
+                <div class="task-info">
+                    <strong>Progreso:</strong> 0%
+                </div>
+                <div class="task-info">
+                    <div class="date-display">Entrega: None</div>
+                </div>
+            </div>
+        </div>
+        <div class="image-column">
+            <img src="../img/IMG_1837.JPEG" alt="Background">
         </div>
     </div>
     
@@ -1073,55 +1156,60 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/xtz.gif" alt="Background">
+                <img src="../img/SaveClip.App_618147855_18554841355017994_7553449007600446585_n.jpg" alt="Background">
             </div>
         </div>
     </div>
     
-    <div class="double layout-center-margins">
-        <div class="left-margin">
-            <div class="margin-text">          </div>
+    <div class="double layout-grid">
+        <div class="text-area">
+            <h2>RQ-IGD-26021-PSI Musical</h2>
+            <div class="task-info">
+                <div class="task-label">Código</div>
+                <div class="task-value">          </div>
+            </div>
+            <div class="task-info">
+                <div class="task-label">Notas</div>
+                <div class="task-value">..</div>
+            </div>
+            <div class="highlight-box">
+                <strong>Progreso:</strong> 0%<br>
+                <strong>Estado:</strong> Sin Definir
+            </div>
         </div>
-        <div class="center-content">
-            <div class="image-container">
-                <img src="../img/SaveClip.App_618147855_18554841355017994_7553449007600446585_n.jpg" alt="Background">
-                <div class="text-overlay">
-                    <h2>RQ-IGD-26021-PSI Musical</h2>
-                    <div class="task-info">
-                        <strong>Sin Definir</strong> - 0%
-                    </div>
-                    <div class="task-info">
-                        ...
-                    </div>
+        <div class="image-area-1">
+            <img src="../img/IMG_5070.JPEG" alt="Background">
+        </div>
+        <div class="image-area-2">
+            <div>
+                <div class="task-label">Depósito</div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+                    Por hacer
+                </div>
+                <div class="task-label">Gerencia</div>
+                <div style="font-size: 16px;">
+                    Gerencia Logistica
                 </div>
             </div>
         </div>
-        <div class="right-margin">
-            <div class="margin-text">PROYECTO</div>
-        </div>
     </div>
     
-    <div class="double layout-full-overlay">
-        <div class="background-image">
-            <img src="../img/IMG_1837.JPEG" alt="Background">
-        </div>
-        <div class="gradient-overlay"></div>
-        <div class="content-box">
-            <h2>
-                RQ-IGD-26024-Modificación
-                <span class="red-accent">IR 1200</span>
-            </h2>
-            <div class="task-info" style="font-size: 16px; margin-bottom: 15px;">
-                <strong>Código:</strong>           
+    <div class="double layout-diagonal">
+        <div class="diagonal-bg"></div>
+        <div class="content-wrapper">
+            <div class="text-section">
+                <div class="task-code" style="color: var(--accent-red);">          </div>
+                <h2>RQ-IGD-26024-Modificación IR 1200</h2>
+                <div class="task-info">
+                    <strong>Depósito:</strong> Por hacer
+                </div>
+                <div class="task-info">
+                    <strong>Gerencia:</strong> Sin_Definir
+                </div>
+                <div class="percentage-badge">0% Completado</div>
             </div>
-            <div class="task-info">
-                <strong>Depósito:</strong> Por hacer
-            </div>
-            <div class="task-info">
-                <strong>Estado:</strong> Sin Definir
-            </div>
-            <div class="percentage-badge" style="margin-top: 20px; font-size: 18px;">
-                0%
+            <div class="image-section">
+                <img src="../img/caja_cambios.jpg" alt="Background">
             </div>
         </div>
     </div>
@@ -1143,7 +1231,7 @@
             </div>
         </div>
         <div class="image-area-1">
-            <img src="../img/fondoYmc.png" alt="Background">
+            <img src="../img/IMG_4339.JPEG" alt="Background">
         </div>
         <div class="image-area-2">
             <div>
@@ -1184,32 +1272,69 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/IMG_1106.JPEG" alt="Background">
+            <img src="../img/IMG_4480.JPEG" alt="Background">
         </div>
     </div>
     
-    <div class="double layout-right-text">
+    <div class="double layout-grid">
+        <div class="text-area">
+            <h2>RQ-IGD-26027-Modelo de datos TUDU (Ensamble - Soldadura - Pintura) - Juliana - Julieth</h2>
+            <div class="task-info">
+                <div class="task-label">Código</div>
+                <div class="task-value">          </div>
+            </div>
+            <div class="task-info">
+                <div class="task-label">Notas</div>
+                <div class="task-value">..</div>
+            </div>
+            <div class="highlight-box">
+                <strong>Progreso:</strong> 0%<br>
+                <strong>Estado:</strong> Planeado
+            </div>
+        </div>
+        <div class="image-area-1">
+            <img src="../img/IMG_5070.JPEG" alt="Background">
+        </div>
+        <div class="image-area-2">
+            <div>
+                <div class="task-label">Depósito</div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+                    Por hacer
+                </div>
+                <div class="task-label">Gerencia</div>
+                <div style="font-size: 16px;">
+                    Sin_Definir
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="double layout-left-text">
         <div class="text-column">
             <div class="text-content">
-                <h2>RQ-IGD-26027-Modelo de datos TUDU (Ensamble - Soldadura - Pintura) - Juliana - Julieth</h2>
-                <div class="divider"></div>
-                <div class="task-label">Código:           </div>
+                <div class="accent-line"></div>
+                <div class="task-code">          </div>
+                <h2>RQ-IGD-26031-Gobernanza TI - COBIT</h2>
                 <div class="task-info">
-                    <strong>Estado:</strong> Planeado
+                    <div class="task-label">Depósito</div>
+                    <div class="task-value">Por hacer</div>
                 </div>
                 <div class="task-info">
-                    <strong>Notas:</strong><br>
+                    <div class="task-label">Gerencia</div>
+                    <div class="task-value">Sin_Definir</div>
                 </div>
-                <div class="task-info">
-                    <strong>Progreso:</strong> 0%
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0.0%"></div>
                 </div>
+                <div class="percentage-badge">0%</div>
                 <div class="task-info">
-                    <div class="date-display">Entrega: None</div>
+                    <div class="date-display">Inicio: None</div>
+                    <div class="date-display">Fin: None</div>
                 </div>
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/MT09-2025-BANNER (2).jpg" alt="Background">
+            <img src="../img/SaveClip.App_616236505_18554324236017994_3939149151847755334_n.jpg" alt="Background">
         </div>
     </div>
     
@@ -1218,7 +1343,7 @@
         <div class="content-wrapper">
             <div class="text-section">
                 <div class="task-code" style="color: var(--accent-red);">          </div>
-                <h2>RQ-IGD-26031-Gobernanza TI - COBIT</h2>
+                <h2>RQ-IGD-26032-Estrategia Gobierno de Datos</h2>
                 <div class="task-info">
                     <strong>Depósito:</strong> Por hacer
                 </div>
@@ -1228,33 +1353,8 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/IMG_3210.JPEG" alt="Background">
+                <img src="../img/5c37bc2d-f632-42ed-8585-d38ae0fe2575.JPEG" alt="Background">
             </div>
-        </div>
-    </div>
-    
-    <div class="double layout-right-text">
-        <div class="text-column">
-            <div class="text-content">
-                <h2>RQ-IGD-26032-Estrategia Gobierno de Datos</h2>
-                <div class="divider"></div>
-                <div class="task-label">Código:           </div>
-                <div class="task-info">
-                    <strong>Estado:</strong> Plan Anterior
-                </div>
-                <div class="task-info">
-                    <strong>Notas:</strong><br>
-                </div>
-                <div class="task-info">
-                    <strong>Progreso:</strong> 0%
-                </div>
-                <div class="task-info">
-                    <div class="date-display">Entrega: None</div>
-                </div>
-            </div>
-        </div>
-        <div class="image-column">
-            <img src="../img/fondoYmcDER.jpg" alt="Background">
         </div>
     </div>
     
@@ -1283,32 +1383,30 @@
             </div>
         </div>
         <div class="image-column">
-            <img src="../img/70aniversarioYamaha2.jpg" alt="Background">
+            <img src="../img/xtz.gif" alt="Background">
         </div>
     </div>
     
-    <div class="double layout-right-text">
-        <div class="text-column">
-            <div class="text-content">
-                <h2>RQ-IGD-26035-Precios de transferencia anual (requerimiento NAV REQ_001046 2019)</h2>
-                <div class="divider"></div>
-                <div class="task-label">Código:           </div>
-                <div class="task-info">
-                    <strong>Estado:</strong> Plan Anterior
-                </div>
-                <div class="task-info">
-                    <strong>Notas:</strong><br>
-                </div>
-                <div class="task-info">
-                    <strong>Progreso:</strong> 0%
-                </div>
-                <div class="task-info">
-                    <div class="date-display">Entrega: None</div>
+    <div class="double layout-center-margins">
+        <div class="left-margin">
+            <div class="margin-text">          </div>
+        </div>
+        <div class="center-content">
+            <div class="image-container">
+                <img src="../img/xsr900blancoRojo2.jpg" alt="Background">
+                <div class="text-overlay">
+                    <h2>RQ-IGD-26035-Precios de transferencia anual (requerimiento NAV REQ_001046 2019)</h2>
+                    <div class="task-info">
+                        <strong>Plan Anterior</strong> - 0%
+                    </div>
+                    <div class="task-info">
+                        ...
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="image-column">
-            <img src="../img/IMG_0261.JPEG" alt="Background">
+        <div class="right-margin">
+            <div class="margin-text">PROYECTO</div>
         </div>
     </div>
     
@@ -1327,33 +1425,41 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/nmax.jpg" alt="Background">
+                <img src="../img/IMG_1106.JPEG" alt="Background">
             </div>
         </div>
     </div>
     
-    <div class="double layout-right-text">
-        <div class="text-column">
-            <div class="text-content">
-                <h2>RQ-IGD-26037- Modelo Datos B2chat</h2>
-                <div class="divider"></div>
-                <div class="task-label">Código:           </div>
-                <div class="task-info">
-                    <strong>Estado:</strong> Sin Definir
-                </div>
-                <div class="task-info">
-                    <strong>Notas:</strong><br>
-                </div>
-                <div class="task-info">
-                    <strong>Progreso:</strong> 0%
-                </div>
-                <div class="task-info">
-                    <div class="date-display">Entrega: None</div>
-                </div>
+    <div class="double layout-grid">
+        <div class="text-area">
+            <h2>RQ-IGD-26037- Modelo Datos B2chat</h2>
+            <div class="task-info">
+                <div class="task-label">Código</div>
+                <div class="task-value">          </div>
+            </div>
+            <div class="task-info">
+                <div class="task-label">Notas</div>
+                <div class="task-value">..</div>
+            </div>
+            <div class="highlight-box">
+                <strong>Progreso:</strong> 0%<br>
+                <strong>Estado:</strong> Sin Definir
             </div>
         </div>
-        <div class="image-column">
-            <img src="../img/caja_cambios.jpg" alt="Background">
+        <div class="image-area-1">
+            <img src="../img/xsr.gif" alt="Background">
+        </div>
+        <div class="image-area-2">
+            <div>
+                <div class="task-label">Depósito</div>
+                <div style="font-size: 18px; font-weight: 700; margin-bottom: 10px;">
+                    Por hacer
+                </div>
+                <div class="task-label">Gerencia</div>
+                <div style="font-size: 16px;">
+                    Sin_Definir
+                </div>
+            </div>
         </div>
     </div>
     
@@ -1372,7 +1478,7 @@
                 <div class="percentage-badge">0% Completado</div>
             </div>
             <div class="image-section">
-                <img src="../img/xsr900blancoRojo.jpg" alt="Background">
+                <img src="../img/IMG_1837.JPEG" alt="Background">
             </div>
         </div>
     </div>

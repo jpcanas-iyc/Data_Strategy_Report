@@ -78,10 +78,105 @@ def Promedio_Encuestas(engine):
     promedio = pd.read_sql(query, engine)
     return promedio
 
+def Total_Planeados_yAnterior(engine):
+    query = """
+        SELECT COUNT(Tarea_Project_Key) AS total
+        FROM [DWH_INCOLMOTOS].[ti].[Dim_Tareas_Project]
+        WHERE Tarea_Project_Key NOT IN (41, 33)
+        AND Estado_Tarea_Project_key IN (2,4)
+    """
+    df = pd.read_sql(query, engine)
+    return int(df["total"][0] or 0)
 
 
 
 
+def obtener_cumplimiento_proyectos(engine):
+
+    query = """
+        SELECT 
+            CAST(
+                COUNT(CASE WHEN Estado_Tarea_Project_key = 2 
+                           AND Deposito_Project_Key = 2 THEN 1 END) * 100.0
+                /
+                NULLIF(COUNT(CASE WHEN Estado_Tarea_Project_key = 2 THEN 1 END), 0)
+            AS DECIMAL(5,2)) AS planeados,
+
+            CAST(
+                COUNT(CASE WHEN Estado_Tarea_Project_key = 3 
+                           AND Deposito_Project_Key = 2 THEN 1 END) * 100.0
+                /
+                NULLIF(COUNT(CASE WHEN Estado_Tarea_Project_key = 3 THEN 1 END), 0)
+            AS DECIMAL(5,2)) AS nuevos,
+
+            CAST(
+                COUNT(CASE WHEN Estado_Tarea_Project_key = 4 
+                           AND Deposito_Project_Key = 2 THEN 1 END) * 100.0
+                /
+                NULLIF(COUNT(CASE WHEN Estado_Tarea_Project_key = 4 THEN 1 END), 0)
+            AS DECIMAL(5,2)) AS plan_anterior
+
+        FROM [DWH_INCOLMOTOS].[ti].[Dim_Tareas_Project]
+        WHERE Tarea_Project_Key NOT IN (41, 33)
+    """
+
+    df = pd.read_sql(query, engine)
+
+    return {
+        "planeados": float(df["planeados"][0] or 0),
+        "nuevos": float(df["nuevos"][0] or 0),
+        "plan_anterior": float(df["plan_anterior"][0] or 0),
+    }
+
+
+
+
+
+def obtener_resumen_ejecutivo(engine):
+    query = """
+        SELECT 
+            COUNT(CASE WHEN Estado_Tarea_Project_key IN (2,4) THEN 1 END) AS total_plan,
+
+            COUNT(CASE WHEN Estado_Tarea_Project_key IN (2,4)
+                       AND Deposito_Project_Key = 2 THEN 1 END) AS ejecutados_plan,
+
+            COUNT(CASE WHEN Estado_Tarea_Project_key = 3 THEN 1 END) AS total_nuevos,
+
+            COUNT(CASE WHEN Estado_Tarea_Project_key = 3
+                       AND Deposito_Project_Key = 2 THEN 1 END) AS ejecutados_nuevos
+
+        FROM [DWH_INCOLMOTOS].[ti].[Dim_Tareas_Project]
+        WHERE Tarea_Project_Key NOT IN (41, 33)
+    """
+
+    df = pd.read_sql(query, engine)
+
+    total_plan = int(df["total_plan"][0] or 0)
+    ejecutados_plan = int(df["ejecutados_plan"][0] or 0)
+
+    total_nuevos = int(df["total_nuevos"][0] or 0)
+    ejecutados_nuevos = int(df["ejecutados_nuevos"][0] or 0)
+
+    total_general = total_plan + total_nuevos
+
+    porcentaje_avance = round(
+        (ejecutados_plan / total_plan * 100) if total_plan > 0 else 0, 1
+    )
+
+    incremento = round(
+        ((total_general - total_plan) / total_plan * 100) if total_plan > 0 else 0,
+        1
+    )
+
+    return {
+        "total_plan": total_plan,
+        "ejecutados_plan": ejecutados_plan,
+        "porcentaje_avance": porcentaje_avance,
+        "total_nuevos": total_nuevos,
+        "ejecutados_nuevos": ejecutados_nuevos,
+        "total_general": total_general,
+        "incremento": incremento
+    }
 
 
 
@@ -322,6 +417,8 @@ def layout_grid(row, img_url):
 
 def generar_flipbook(df, output="output/flipbook.html"):
     estadisticas = generar_estadisticas(df)
+    resumen = obtener_resumen_ejecutivo(engine)
+
     paginas = []
     
     # Obtener todas las imágenes disponibles
@@ -658,7 +755,14 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
 
 
-    
+    cumplimientos = obtener_cumplimiento_proyectos(engine)
+
+    planeados = round(cumplimientos["planeados"], 2)
+    nuevos = round(cumplimientos["nuevos"], 2)
+    plan_anterior = round(cumplimientos["plan_anterior"], 2)
+    total_proyectos = Total_Planeados_yAnterior(engine)
+
+
 
                         
     pagina_kpi = f"""
@@ -673,75 +777,139 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
             <div class="kpi-top-graphs">
 
-                <!-- Gráfica -->
-                <div >
-                    <span style="
-                        display:inline-block;
-                        padding:4px 12px;
-                        border-radius:5px;
-                        background-color:rgba(198,40,40,0.08);
-                        color:#C62828;
-                        font-size:12px;
-                        font-weight:600;
-                        letter-spacing:0.5px;
-                        text-align:left;
-                        margin-bottom:10px;
-                    ">
-                        Cumplimiento Proyectos
-                    </span>
+            <div>
+                <span style="
+                    display:inline-block;
+                    padding:4px 12px;
+                    border-radius:5px;
+                    background-color:rgba(198,40,40,0.08);
+                    color:#C62828;
+                    font-size:12px;
+                    font-weight:600;
+                    letter-spacing:0.5px;
+                    text-align:left;
+                    margin-bottom:10px;">
+                    Cumplimiento Proyectos
+                </span>
 
-                    <div class="kpi-bar-chart">
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Planeados</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p90"></div>
-                            </div>
-                            <div class="kpi-bar-value">90%</div>
-                        </div>
+                <div class="kpi-bar-chart">
 
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Nuevos</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p82"></div>
-                            </div>
-                            <div class="kpi-bar-value">82%</div>
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Planeados</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="{planeados}"></div>
                         </div>
-
-                        <div class="kpi-bar-item">
-                            <div class="kpi-bar-label">Plan Anterior</div>
-                            <div class="kpi-bar">
-                                <div class="kpi-bar-fill p82"></div>
-                            </div>
-                            <div class="kpi-bar-value">82%</div>
-                        </div>
+                        <div class="kpi-bar-value">{planeados}%</div>
                     </div>
-                </div>
 
-                <!-- Descripción -->
-                <div style="font-size:10px; line-height:2.4;">
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Nuevos</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="{nuevos}"></div>
+                        </div>
+                        <div class="kpi-bar-value">{nuevos}%</div>
+                    </div>
 
-                    <span style="color:#C62828; font-weight:700;">31 proyectos</span> 
-                    forman parte del plan anual estratégico definido para el 2026 (Proyectos planeados y Planes anteriores). 
-                    De estos, se han ejecutado 
-                    <span style="color:#C62828; font-weight:700;">10 proyectos</span>, 
-                    lo que representa un avance del 
-                    <span style="color:#C62828; font-weight:700;">30%</span> 
-                    frente a lo planificado.
-
-                    Durante el transcurso del año han ingresado 
-                    <span style="color:#C62828; font-weight:700;">16 nuevos proyectos</span>, 
-                    de los cuales se han ejecutado 
-                    <span style="color:#C62828; font-weight:700;">5 proyectos</span>.
-
-                    En total, la gestión del año contempla 
-                    <span style="color:#C62828; font-weight:700;">47 proyectos</span>, 
-                    lo que representa un incremento del 
-                    <span style="color:#C62828; font-weight:700;">51,6%</span> 
-                    frente a lo inicialmente planificado.
+                    <div class="kpi-bar-item">
+                        <div class="kpi-bar-label">Plan Anterior</div>
+                        <div class="kpi-bar">
+                            <div class="kpi-bar-fill" data-value="{plan_anterior}"></div>
+                        </div>
+                        <div class="kpi-bar-value">{plan_anterior}%</div>
+                    </div>
 
                 </div>
+            </div>
 
-            </div>  
+            <!-- Descripción dinámica -->
+            <div style="font-size:10px; line-height:2.4; margin-top:15px;">
+
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["total_plan"]} proyectos
+                </span> 
+                forman parte del plan anual estratégico definido para el 2026 
+                (Proyectos planeados y Planes anteriores). 
+
+                De estos, se han ejecutado 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["ejecutados_plan"]} proyectos
+                </span>, 
+                lo que representa un avance del 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["porcentaje_avance"]}%
+                </span> 
+                frente a lo planificado.
+
+
+                Durante el transcurso del año han ingresado 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["total_nuevos"]} nuevos proyectos
+                </span>, 
+                de los cuales se han ejecutado 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["ejecutados_nuevos"]} proyectos
+                </span>.
+
+
+                En total, la gestión del año contempla 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["total_general"]} proyectos
+                </span>, 
+                lo que representa un incremento del 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["incremento"]}%
+                </span> 
+                frente a lo inicialmente planificado.
+
+            </div>
+
+        </div>
+
+        <style>
+        .kpi-bar {{
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 6px;
+            overflow: hidden;
+        }}
+
+        .kpi-bar-fill {{
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, #C62828, #ef5350);
+            border-radius: 6px;
+            transition: width 1.8s cubic-bezier(.4,0,.2,1);
+            box-shadow: 0 0 8px rgba(198,40,40,0.4);
+        }}
+
+        .kpi-bar-item {{
+            margin-bottom: 15px;
+        }}
+
+        .kpi-bar-label {{
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }}
+
+        .kpi-bar-value {{
+            font-size: 12px;
+            margin-top: 4px;
+            font-weight: 600;
+        }}
+        </style>
+
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {{
+            document.querySelectorAll('.kpi-bar-fill').forEach(function(bar) {{
+                let target = bar.getAttribute("data-value");
+                setTimeout(() => {{
+                    bar.style.width = target + "%";
+                }}, 400);
+            }});
+        }});
+        </script>
 
             <div class="kpi-roi-header">
                 <div class="kpi-roi-title">
