@@ -1958,3 +1958,76 @@ h1, h2 {
 .kpi-point.p2 { left: 35%; top: 40%; }
 .kpi-point.p3 { left: 60%; top: 45%; }
 .kpi-point.p4 { left: 85%; top: 35%; }
+
+
+
+.layout-descripcion {
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.descripcion-container {
+    width: 80%;
+    max-width: 600px;
+}
+
+.descripcion-header h2 {
+    font-size: 22px;
+    margin-bottom: 6px;
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+}
+
+.descripcion-sub {
+    font-size: 11px;
+    color: #C62828;
+    font-weight: 600;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+}
+
+.descripcion-body {
+    font-family: 'Sora', sans-serif;
+    font-weight: 300;
+    font-size: 10px;
+    line-height: 1.8;
+    text-align: justify;
+    color: #444;
+}
+
+/* Grupo 2 columnas */
+.desc-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 22px;
+}
+
+/* Sección sin contenedor visual */
+.desc-section {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+/* Título */
+.desc-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 600;
+    font-size: 10.5px;
+    color: #C62828;
+    margin-bottom: 4px;
+    letter-spacing: 0.4px;
+}
+
+/* Texto plano */
+.desc-text {
+    font-family: 'Sora', sans-serif;
+    font-weight: 300;
+    font-size: 10px;
+    line-height: 1.7;
+    color: #444;
+    text-align: justify;
+}

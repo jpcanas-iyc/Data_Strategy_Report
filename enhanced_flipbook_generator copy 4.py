@@ -59,7 +59,9 @@ def obtener_tareas(engine):
     LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Estado_Tareas_Project] E
         ON T.Estado_Tarea_Project_key = E.Estado_Tarea_Project_key
     WHERE T.Jefatura_Project_Key = 2
-    and Tarea_Project_Key NOT IN (41, 33)
+    AND T.Tarea_Project_Key NOT IN (41, 33)
+    AND T.Estado_Tarea_Project_key IN (2,4)
+
     """
     df = pd.read_sql(query, engine)
     return df
@@ -419,6 +421,83 @@ def layout_grid(row, img_url):
         </div>
     </div>
     """
+
+
+
+def layout_descripcion_proyecto(row):
+    descripcion = row["Descripcion_Tarea_Project"] or ""
+
+    if not descripcion.strip():
+        descripcion = "Sin descripción disponible."
+
+    secciones = [
+        "Situación actual",
+        "Problema clave",
+        "Objetivo del proyecto",
+        "Alcance de la solución",
+        "Impacto esperado / ROI"
+    ]
+
+    # Insertar separadores
+    for s in secciones:
+        descripcion = descripcion.replace(s, f"|||{s}")
+
+    bloques = [b.strip() for b in descripcion.split("|||") if b.strip()]
+
+    # Ignorar Área si existiera
+    bloques_filtrados = []
+    for bloque in bloques:
+        if bloque.lower().startswith("área"):
+            continue
+        bloques_filtrados.append(bloque)
+
+    # Agrupar de 2 en 2
+    grupos = [bloques_filtrados[i:i+2] for i in range(0, len(bloques_filtrados), 2)]
+
+    bloques_html = ""
+
+    for grupo in grupos:
+        bloques_html += '<div class="desc-group">'
+        
+        for bloque in grupo:
+            partes = bloque.split(":", 1)
+            if len(partes) == 2:
+                titulo = partes[0].strip()
+                contenido = partes[1].strip()
+            else:
+                titulo = ""
+                contenido = bloque.strip()
+
+            bloques_html += f"""
+                <div class="desc-section">
+                    <div class="desc-title">{titulo}</div>
+                    <div class="desc-text">{contenido}</div>
+                </div>
+            """
+
+        bloques_html += "</div>"
+
+    return f"""
+    <div class="double layout-descripcion">
+        <div class="descripcion-container">
+
+            <div class="descripcion-header">
+                <h2>{row['Nombre_Tarea_Project']}</h2>
+                <div class="descripcion-sub">
+                    {row['Nom_Estado_Tarea_Project']} · {row['Nombre_Deposito_Project']}
+                </div>
+            </div>
+
+            <div class="descripcion-body">
+                {bloques_html}
+            </div>
+
+        </div>
+    </div>
+    """
+
+
+
 
 # -------------------------
 # 6. Generar flipbook HTML
@@ -938,12 +1017,11 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
 
 
-
            <div class="kpi-quick-stats">
 
                 <div class="kpi-quick-item">
                     <div class="kpi-metric-value">128</div>
-                    <div class="kpi-quick-label">Suma Cantidad de Procesos</div>
+                    <div class="kpi-quick-label">Cantidad Nuevos Procesos</div>
                 </div>
 
                 <div class="kpi-quick-item">
@@ -1059,39 +1137,38 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
     
     # --- Páginas de las tareas con layouts alternando colores ---
-    color_anterior = None  # Para tracking del color previo
-    
+    # --- Páginas de las tareas (2 páginas por proyecto) ---
+    color_anterior = None  
+
     for idx, (_, row) in enumerate(df.iterrows()):
-        # Seleccionar imagen aleatoria
+
         img_url = random.choice(imagenes)
-        
-        # Alternar entre azul/oscuro y claro/diagonal
+
+        # Alternar colores SOLO para la página izquierda
         if color_anterior == 'azul':
             grupo = random.choice([layouts_oscuros, layouts_claros])
             color_anterior = 'oscuro' if grupo == layouts_oscuros else 'claro'
         elif color_anterior == 'oscuro':
             grupo = random.choice([layouts_azules, layouts_claros])
             color_anterior = 'azul' if grupo == layouts_azules else 'claro'
-        else:  # None o 'claro'
-            # Puede ser cualquiera excepto repetir claro
-            if color_anterior == 'claro':
-                grupo = random.choice([layouts_azules, layouts_oscuros])
-                color_anterior = 'azul' if grupo == layouts_azules else 'oscuro'
+        else:
+            grupo = random.choice([layouts_azules, layouts_oscuros, layouts_claros])
+            if grupo == layouts_azules:
+                color_anterior = 'azul'
+            elif grupo == layouts_oscuros:
+                color_anterior = 'oscuro'
             else:
-                # Primera iteración
-                grupo = random.choice([layouts_azules, layouts_oscuros, layouts_claros])
-                if grupo == layouts_azules:
-                    color_anterior = 'azul'
-                elif grupo == layouts_oscuros:
-                    color_anterior = 'oscuro'
-                else:
-                    color_anterior = 'claro'
-        
+                color_anterior = 'claro'
+
         layout_func = random.choice(grupo)
-        
-        # Generar página con el layout seleccionado
-        pagina = layout_func(row, img_url)
-        paginas.append(pagina)
+
+        # 🔹 Página izquierda (foto + datos)
+        pagina_izquierda = layout_func(row, img_url)
+        paginas.append(pagina_izquierda)
+
+        # 🔹 Página derecha (descripción)
+        pagina_derecha = layout_descripcion_proyecto(row)
+        paginas.append(pagina_derecha)
 
 
 
@@ -1316,6 +1393,8 @@ def generar_flipbook(df, output="output/flipbook.html"):
     </html>
     """
     
+
+
     # Crear directorio de salida si no existe
     os.makedirs(os.path.dirname(output), exist_ok=True)
     
