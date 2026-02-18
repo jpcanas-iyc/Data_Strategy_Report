@@ -27,41 +27,53 @@ def conectar_db():
 # -------------------------
 def obtener_tareas(engine):
     query = """
+SELECT 
+    T.Tarea_Project_Key,
+    T.Project_Project_Key,
+    T.Jefatura_Project_Key,
+    T.Codigo_Esquema_Tarea,
+    T.Codigo_Tarea,
+    T.Nombre_Tarea_Project,
+    T.Descripcion_Tarea_Project,
+    T.Estado_Tarea_Project_key,
+    T.Objs_Estrat_Area_Project_Key,
+    T.Objs_Div_TI_Project_Key,
+    T.Gcia_Project_Key,
+    T.Categoria_YMC_key,
+    T.Codigo_MTP_key,
+    T.Porcentaje_Ejecucion,
+    T.Deposito_Project_Key,
+    T.Fecha_Inicio,
+    T.Fecha_Fin,
+    T.Fecha_Estimada_Entrega,
+    T.Notas_IA_Project,
+    D.Nombre_Deposito_Project,
+    G.Nom_Gcia_Project,
+    E.Nom_Estado_Tarea_Project
+FROM [DWH_INCOLMOTOS].[ti].[Dim_Tareas_Project] T
+LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Depositos_Project] D
+    ON T.Deposito_Project_Key = D.Deposito_Project_Key
+LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Gcias_Involucradas_Project] G
+    ON T.Gcia_Project_Key = G.Gcia_Project_Key
+LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Estado_Tareas_Project] E
+    ON T.Estado_Tarea_Project_key = E.Estado_Tarea_Project_key
+WHERE 
+    T.Jefatura_Project_Key = 2
+    AND
+    (
+        -- Planeados y Plan Anterior (en curso o finalizados)
+        (T.Estado_Tarea_Project_key IN (2,4) 
+            AND T.Deposito_Project_Key IN (2,3)
+            AND T.Tarea_Project_Key NOT IN (41,33)
+        )
 
-    SELECT 
-        T.Tarea_Project_Key,
-        T.Project_Project_Key,
-        T.Jefatura_Project_Key,
-        T.Codigo_Esquema_Tarea,
-        T.Codigo_Tarea,
-        T.Nombre_Tarea_Project,
-        T.Descripcion_Tarea_Project,
-        T.Estado_Tarea_Project_key,
-        T.Objs_Estrat_Area_Project_Key,
-        T.Objs_Div_TI_Project_Key,
-        T.Gcia_Project_Key,
-        T.Categoria_YMC_key,
-        T.Codigo_MTP_key,
-        T.Porcentaje_Ejecucion,
-        T.Deposito_Project_Key,
-        T.Fecha_Inicio,
-        T.Fecha_Fin,
-        T.Fecha_Estimada_Entrega,
-        T.Notas_IA_Project,
-        D.Nombre_Deposito_Project,
-        G.Nom_Gcia_Project,
-        E.Nom_Estado_Tarea_Project
-    FROM [DWH_INCOLMOTOS].[ti].[Dim_Tareas_Project] T
-    LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Depositos_Project] D
-        ON T.Deposito_Project_Key = D.Deposito_Project_Key
-    LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Gcias_Involucradas_Project] G
-        ON T.Gcia_Project_Key = G.Gcia_Project_Key
-    LEFT JOIN [DWH_INCOLMOTOS].[ti].[Dim_Estado_Tareas_Project] E
-        ON T.Estado_Tarea_Project_key = E.Estado_Tarea_Project_key
-    WHERE T.Jefatura_Project_Key = 2
-    AND T.Tarea_Project_Key NOT IN (41, 33)
-    AND T.Estado_Tarea_Project_key IN (2,4)
+        OR
 
+        -- Proyectos nuevos
+        (T.Estado_Tarea_Project_key = 3)
+    );
+
+    
     """
     df = pd.read_sql(query, engine)
     return df
@@ -452,7 +464,27 @@ def layout_descripcion_proyecto(row):
         bloques_filtrados.append(bloque)
 
     # Agrupar de 2 en 2
-    grupos = [bloques_filtrados[i:i+2] for i in range(0, len(bloques_filtrados), 2)]
+        orden_correcto = [
+        "Situación actual",
+        "Problema clave",
+        "Objetivo del proyecto",
+        "Alcance de la solución",
+        "Impacto esperado / ROI"
+    ]
+
+    bloques_ordenados = []
+
+    for titulo in orden_correcto:
+        for bloque in bloques_filtrados:
+            if bloque.startswith(titulo):
+                bloques_ordenados.append(bloque)
+
+    # Ahora agrupamos manualmente
+    grupos = [
+        bloques_ordenados[0:2],  # Situación + Problema
+        bloques_ordenados[2:4],  # Objetivo + Alcance
+        bloques_ordenados[4:5]   # Impacto
+    ]
 
     bloques_html = ""
 
@@ -461,21 +493,29 @@ def layout_descripcion_proyecto(row):
         
         for bloque in grupo:
             partes = bloque.split(":", 1)
-            if len(partes) == 2:
-                titulo = partes[0].strip()
-                contenido = partes[1].strip()
-            else:
-                titulo = ""
-                contenido = bloque.strip()
+            titulo = partes[0].strip()
+            contenido = partes[1].strip() if len(partes) == 2 else bloque
+
+            clase_extra = ""
+            if "Impacto esperado" in titulo:
+                clase_extra = "desc-full"
 
             bloques_html += f"""
-                <div class="desc-section">
+                <div class="desc-section {clase_extra}">
                     <div class="desc-title">{titulo}</div>
                     <div class="desc-text">{contenido}</div>
                 </div>
             """
 
         bloques_html += "</div>"
+
+
+    # Detectar densidad de texto
+    texto_total = len(descripcion)
+
+    clase_compacta = ""
+    if texto_total > 1200:   # puedes ajustar este número
+        clase_compacta = "compact"
 
     return f"""
     <div class="double layout-descripcion">
@@ -488,7 +528,7 @@ def layout_descripcion_proyecto(row):
                 </div>
             </div>
 
-            <div class="descripcion-body">
+            <div class="descripcion-body {clase_compacta}">
                 {bloques_html}
             </div>
 
@@ -532,7 +572,7 @@ def generar_flipbook(df, output="output/flipbook.html"):
     ]
     
     # --- Portada CORREGIDA ---
-    img_portada = "../img/70aniversarioYamaha1.jpg"
+    img_portada = "../img/UsoPag/70aniversarioYamaha1.jpg"
     portada = f"""
     <div class="double portada-custom">
         <div class="bg-image">
@@ -1116,7 +1156,7 @@ def generar_flipbook(df, output="output/flipbook.html"):
     pagina_video = f"""
     <div class="double full-video-page">
         <video id="kpiVideo" muted playsinline>
-            <source src="../img/fondoderechakpi(2).mp4" type="video/mp4">
+            <source src="../img/UsoPag/fondoderechakpi(2).mp4" type="video/mp4">
         </video>
     </div>
     """
