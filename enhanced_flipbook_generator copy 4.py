@@ -687,7 +687,7 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
     pagina_imagen = f"""
     <div class="double full-image-page">
-        <img src="https://jpcanas-iyc.github.io/Data_Strategy_Report/img/IMG_0283.JPEG" alt="IMG_0283">
+        <img src="https://jpcanas-iyc.github.io/Data_Strategy_Report/img/UsoPag/IMG_0283.JPEG" alt="IMG_0283">
     </div>
     """
 
