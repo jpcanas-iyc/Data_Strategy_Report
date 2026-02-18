@@ -462,7 +462,7 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
     pagina_imagen = f"""
     <div class="double full-image-page"
-        style="background-image: url('../img/IMG_0283.jpeg');">
+        style="background-image: url('../img/xsr900blancorojo2.jpg');">
     </div>
     """
 
