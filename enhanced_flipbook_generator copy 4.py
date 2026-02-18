@@ -135,6 +135,11 @@ def obtener_cumplimiento_proyectos(engine):
 def obtener_resumen_ejecutivo(engine):
     query = """
         SELECT 
+            -- Totales individuales
+            COUNT(CASE WHEN Estado_Tarea_Project_key = 2 THEN 1 END) AS total_planeados,
+            COUNT(CASE WHEN Estado_Tarea_Project_key = 4 THEN 1 END) AS total_plan_anterior,
+
+            -- Totales combinados
             COUNT(CASE WHEN Estado_Tarea_Project_key IN (2,4) THEN 1 END) AS total_plan,
 
             COUNT(CASE WHEN Estado_Tarea_Project_key IN (2,4)
@@ -150,6 +155,9 @@ def obtener_resumen_ejecutivo(engine):
     """
 
     df = pd.read_sql(query, engine)
+
+    total_planeados = int(df["total_planeados"][0] or 0)
+    total_plan_anterior = int(df["total_plan_anterior"][0] or 0)
 
     total_plan = int(df["total_plan"][0] or 0)
     ejecutados_plan = int(df["ejecutados_plan"][0] or 0)
@@ -169,6 +177,8 @@ def obtener_resumen_ejecutivo(engine):
     )
 
     return {
+        "total_planeados": total_planeados,
+        "total_plan_anterior": total_plan_anterior,
         "total_plan": total_plan,
         "ejecutados_plan": ejecutados_plan,
         "porcentaje_avance": porcentaje_avance,
@@ -177,7 +187,6 @@ def obtener_resumen_ejecutivo(engine):
         "total_general": total_general,
         "incremento": incremento
     }
-
 
 
 # -------------------------
@@ -828,7 +837,14 @@ def generar_flipbook(df, output="output/flipbook.html"):
                     {resumen["total_plan"]} proyectos
                 </span> 
                 forman parte del plan anual estratégico definido para el 2026 
-                (Proyectos planeados y Planes anteriores). 
+                (
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["total_planeados"]} Planeados
+                </span> 
+                y 
+                <span style="color:#C62828; font-weight:700;">
+                    {resumen["total_plan_anterior"]} Plan Anterior
+                </span>).
 
                 De estos, se han ejecutado 
                 <span style="color:#C62828; font-weight:700;">
@@ -842,7 +858,7 @@ def generar_flipbook(df, output="output/flipbook.html"):
 
 
                 Durante el transcurso del año han ingresado 
-                <span style="color:#C62828; font-weight:700;">
+                <span style="color:#C62828; font-weight:700; size:20">
                     {resumen["total_nuevos"]} nuevos proyectos
                 </span>, 
                 de los cuales se han ejecutado 
